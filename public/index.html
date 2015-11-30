@@ -2,14 +2,16 @@
 <html ng-app="tabletennis">
 	<head>
 		<title>Tischtennis DJK SV Furth</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    	<script src="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.js"></script>
     	<script src="js/all.js"></script>
 	</head>
 
 	<body>
 		<div ng-controller="AllController">
 			
-			<div class="gridStyle" ng-grid="gridOptions"></div>
+			<div class="gridStyle" ui-grid="gridOptions"></div>
 			
 		</div>
 	</body>
