@@ -22,10 +22,4 @@ public class SyncEndpoint {
 		excelImporter.fullImport();
 		return playerService.findAll();
 	}
-	
-	@RequestMapping("/")
-	public String index() {
-		return "start.html";
-	}
-	
 }

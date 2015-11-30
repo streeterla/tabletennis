@@ -9,7 +9,11 @@ import de.sms.tabletennis.services.PlayerService;
 
 @RestController
 public class AllEndpoint {
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> branch 'develop' of https://github.com/streeterla/tabletennis.git
 	@Autowired
 	private PlayerService playerService;
 	
