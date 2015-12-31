@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 import de.sms.tabletennis.entities.Player;
 import de.sms.tabletennis.services.PlayerService;
 
+/**
+ * endpoint to get all contacts
+ * 
+ * @author streeter
+ *
+ */
 @RestController
 public class AllEndpoint {
 
@@ -14,7 +20,7 @@ public class AllEndpoint {
 	private PlayerService playerService;
 	
 	@RequestMapping("/all")
-	public Iterable<Player> sync() {
+	public Iterable<Player> all() {
 		return playerService.findAll();
 	}
 	

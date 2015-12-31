@@ -8,6 +8,12 @@ import de.sms.tabletennis.entities.Player;
 import de.sms.tabletennis.excel.ExcelImporter;
 import de.sms.tabletennis.services.PlayerService;
 
+/**
+ * endpoint to sync all contacts from excelfile to database and to get all contacts
+ * 
+ * @author streeter
+ *
+ */
 @RestController
 public class SyncEndpoint {
 	

@@ -1,7 +1,10 @@
 package de.sms.tabletennis.services.impl;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +42,13 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public Iterable<Email> findAll() {
 		return emailDAO.findAll();
+	}
+	
+	@Override
+	public String getAllEmails() {
+		
+		List<Email> emailList = StreamSupport.stream(emailDAO.findAll().spliterator(), true).collect(Collectors.toList());
+		return emailList.stream().map(email -> email.getEmail()).collect(Collectors.joining(";"));
 	}
 
 }

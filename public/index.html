@@ -11,6 +11,7 @@
 		<script src="https://angular-file-upload.appspot.com/js/ng-file-upload-shim.js"></script>
     	<script src="js/all.js"></script>
     	<script src="js/fileupload.js"></script>
+    	<script src="js/email.js"></script>
 	
 	</head>
 
@@ -54,6 +55,10 @@
 					<td><button ng-click="uploadFile()">Upload</button></td>
 				</tr>
 			</table>
+		</div>
+		
+		<div id="mailtoall" ng-controller="MailToAll">
+			<button ng-click="emailToAll()" >Email an alle</button>
 		</div>
 		
 	</body>
