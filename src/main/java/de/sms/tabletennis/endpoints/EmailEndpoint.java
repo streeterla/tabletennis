@@ -6,6 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.sms.tabletennis.services.EmailService;
 
+/**
+ * endpoint to return all emails available in the system
+ * 
+ * @author streeter
+ *
+ */
 @RestController
 public class EmailEndpoint {
 

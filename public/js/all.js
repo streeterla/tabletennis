@@ -10,6 +10,8 @@ app.controller("AllController", [ "$scope", "$http", function($scope, $http) {
             $scope.all = data;
         });
 
+    var phoneTemplate = '<a href="tel:{{ COL_FIELD }}">{{ COL_FIELD }}</a>';
+
 
     $scope.gridOptions = {
 		data: "all",
@@ -17,8 +19,8 @@ app.controller("AllController", [ "$scope", "$http", function($scope, $http) {
 		             {field: "id", displayName: "Rang" },
 		             {field: "firstName", displayName: "Vorname"},
 		             {field: "lastName", displayName: "Nachname"},
-		             {field: "privatePhone.number", displayName: "Festnetz"},
-		             {field: "mobilePhone.number", displayName: "Mobil"}
+		             {field: "privatePhone.number", displayName: "Festnetz", cellTemplate: phoneTemplate},
+		             {field: "mobilePhone.number", displayName: "Mobil", cellTemplate: phoneTemplate}
 		            ]
 		};
 }]);
