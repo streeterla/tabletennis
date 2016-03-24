@@ -35,5 +35,10 @@ public class PlayerServiceImpl implements PlayerService {
 	public Iterable<Player> findByFirstNameAndLastName(String firstName, String lastName) {
 		return playerDAO.findByFirstNameAndLastName(firstName, lastName);
 	}
+	
+	@Override
+	public Iterable<Player> findByFirstName(String firstName) {
+		return playerDAO.findByFirstName(firstName);
+	}
 
 }

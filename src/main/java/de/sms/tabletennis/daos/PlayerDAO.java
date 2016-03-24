@@ -12,4 +12,6 @@ public interface PlayerDAO extends CrudRepository<Player, Long> {
 	public Iterable<Player> findAll();
 	
 	public Iterable<Player> findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);
+	
+	public Iterable<Player> findByFirstName(@Param("firstName") String firstName);
 }

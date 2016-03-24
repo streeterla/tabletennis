@@ -2,7 +2,7 @@
  * angular controller to display all players
  */
 
-var app = angular.module("tabletennis", ["ui.grid",'ngFileUpload']);
+//var app = angular.module("tabletennis", ["ui.grid",'ngFileUpload','ngRoute']);
 
 
 app.controller("AllController", [ "$scope", "$http", function($scope, $http) {

@@ -48,7 +48,7 @@ public class EmailServiceImpl implements EmailService {
 	public String getAllEmails() {
 		
 		List<Email> emailList = StreamSupport.stream(emailDAO.findAll().spliterator(), true).collect(Collectors.toList());
-		return emailList.stream().map(email -> email.getEmail()).collect(Collectors.joining(";"));
+		return emailList.stream().map(Email::getEmail).collect(Collectors.joining(";"));
 	}
 
 }

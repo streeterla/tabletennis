@@ -16,7 +16,7 @@ public class AdressServiceImpl implements AdressService {
 	@Autowired
 	private AdressDAO adressDAO;
 
-	private Logger LOG = Logger.getLogger(AdressServiceImpl.class);
+	private final Logger LOG = Logger.getLogger(AdressServiceImpl.class);
 
 	@Override
 	public void save(Object entity) {

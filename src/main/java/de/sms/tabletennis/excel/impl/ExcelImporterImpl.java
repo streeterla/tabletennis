@@ -29,16 +29,16 @@ import jxl.read.biff.BiffException;
 public class ExcelImporterImpl implements ExcelImporter {
 	
 	@Autowired
-	private PhoneNumberService phoneNumberService;
+	private final PhoneNumberService phoneNumberService;
 	
 	@Autowired
-	private EmailService emailService;
+	private final EmailService emailService;
 	
 	@Autowired
-	private AdressService adressService;
+	private final AdressService adressService;
 	
 	@Autowired
-	private PlayerService playerService;
+	private final PlayerService playerService;
 	
 	@Autowired
 	public ExcelImporterImpl(PhoneNumberService phoneNumberService, EmailService emailService, AdressService adressService,
@@ -63,11 +63,8 @@ public class ExcelImporterImpl implements ExcelImporter {
 				importPlayer(sheet, row);
 			}
 		}
-		catch (BiffException be) {
+		catch (BiffException | IOException be) {
 			be.printStackTrace();
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
 		}
 	}
 

@@ -5,59 +5,39 @@
 	
 		<title>Tischtennis DJK SV Furth</title>
 		<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
     	<script src="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.js"></script>
 		<script src="https://angular-file-upload.appspot.com/js/ng-file-upload.js"></script>
 		<script src="https://angular-file-upload.appspot.com/js/ng-file-upload-shim.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+    	<script src="js/navigation.js"></script>
     	<script src="js/all.js"></script>
     	<script src="js/fileupload.js"></script>
     	<script src="js/email.js"></script>
+    	
+		<style type="text/css">
+			[ng\:cloak], [ng-cloak], .ng-cloak {
+				display: none !important;
+			}
+		</style>
 	
 	</head>
 
-	<body>
+	<body ng-cloak class="ng-cloak">
 	
-		<div ng-controller="AllController" class="showAll">
-			
-			<div class="gridStyle" ui-grid="gridOptions" ui-grid-auto-resize></div>
-			
+		<div ng-controller="navigation as nav" class="container">
+			<ul class="nav nav-pills" role="tablist">
+				<li class="active"><a href="#/">home</a></li>
+				<li ng-show="!authenticated"><a href="#/login">login</a></li>
+				<li ng-show="authenticated"><a href="" ng-click="nav.logout()">logout</a></li>
+				<li ng-show="authenticated"><a href="" ng-click="nav.fileupload()">Excel hochladen</a>
+				<li ng-show="authenticated"><a href="" ng-click="nav.filedownload()">Excel herunterladen</a>
+			</ul>
 		</div>
-		
-<!-- 		<div class="fileUpload">
-		
-			<form ng-controller="FileUploadController" name="form">
-			  <div class="button" ngf-select ng-model="file" name="file">Excel hochladen</div>
-			  <button type="submit" ng-click="submit()">submit</button>
-			</form>		
-		
-		</div> -->
-		
-		<div id="sidebar" ng-controller="FileUploadController">
-			<h2>Upload</h2>
-			<table class="table">
-				<tr>
-					<td>Name</td>
-				</tr>
-				<tr>
-					<td><input type="text" ng-model="name"></td>
-				</tr>
-				<tr>
-					<td>Date</td>
-				</tr>
-				<tr>
-					<td><input type="text" ng-model="date"></td>
-				</tr>
-				<tr>
-					<td><input type="file" class="custom-file-input" file-model="myFile"></td>
-					
-				</tr>
-				<tr>
-					<td><button ng-click="uploadFile()">Upload</button></td>
-				</tr>
-			</table>
-		</div>
-		
-		<div id="mailtoall" ng-controller="MailToAll">
+		<div ng-view class="container"></div>
+	
+		<div ng-show="authenticated" id="mailtoall" ng-controller="MailToAll">
 			<button ng-click="emailToAll()" >Email an alle</button>
 		</div>
 		

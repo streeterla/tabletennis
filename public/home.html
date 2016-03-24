@@ -1,0 +1,10 @@
+<div ng-show="authenticated">
+	<div ng-controller="AllController" class="showAll">
+		
+		<div class="gridStyle" ui-grid="gridOptions" ui-grid-auto-resize></div>
+		
+	</div>
+</div>
+<div  ng-show="!authenticated">
+    <p>Einloggen, um Kontakte anzuzeigen</p>
+</div>
