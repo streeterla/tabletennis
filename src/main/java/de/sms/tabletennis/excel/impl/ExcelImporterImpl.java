@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+import de.sms.tabletennis.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -15,10 +16,6 @@ import de.sms.tabletennis.entities.PhoneNumber;
 import de.sms.tabletennis.entities.PhoneType;
 import de.sms.tabletennis.entities.Player;
 import de.sms.tabletennis.excel.ExcelImporter;
-import de.sms.tabletennis.services.AdressService;
-import de.sms.tabletennis.services.EmailService;
-import de.sms.tabletennis.services.PhoneNumberService;
-import de.sms.tabletennis.services.PlayerService;
 import jxl.DateCell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -39,15 +36,19 @@ public class ExcelImporterImpl implements ExcelImporter {
 	
 	@Autowired
 	private final PlayerService playerService;
+
+	@Autowired
+	private final AccountService accountService;
 	
 	@Autowired
 	public ExcelImporterImpl(PhoneNumberService phoneNumberService, EmailService emailService, AdressService adressService,
-			PlayerService playerService) {
+			PlayerService playerService, AccountService accountService) {
 		super();
 		this.phoneNumberService = phoneNumberService;
 		this.emailService = emailService;
 		this.adressService = adressService;
 		this.playerService = playerService;
+		this.accountService = accountService;
 	}
 
 	@Override
@@ -118,11 +119,12 @@ public class ExcelImporterImpl implements ExcelImporter {
 		adressService.save(adress);
 		player.setAdress(adress);
 		
-		Date birthday = (Date) ((DateCell) sheet.getCell(ROW_BIRTHDAY, rowNumber)).getDate();
+		Date birthday = ((DateCell) sheet.getCell(ROW_BIRTHDAY, rowNumber)).getDate();
 		player.setBirthday(birthday);
 		
 //		Player player = new Player(adress, firstName, lastName, privatePhone, mobilePhone, businessPhone, privateEmail, businessEmail, birthday);
 		playerService.save(player);
+		accountService.save(player);
 		
 		return player;
 	}

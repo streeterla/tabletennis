@@ -93,7 +93,7 @@ public class Application extends WebMvcConfigurerAdapter {
 			LOG.info("Login by http");
 		    http.httpBasic().and()
 		      .authorizeRequests()
-		        .antMatchers("/index.html", "/home.html", "home.html", "/user", "/index.html#/login", "login", "/login", "login.html", "/login.html", "/js/all.js", "/js/email.js", "/js/fileupload.js", "/js/navigation.js").permitAll().anyRequest()
+		        .antMatchers("/index.html", "/home.html", "home.html", "/user", "sync", "/index.html#/login", "login", "/login", "login.html", "/login.html", "/js/all.js", "/js/email.js", "/js/fileupload.js", "/js/navigation.js").permitAll().anyRequest()
 		        .authenticated().and()
 		      .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
 		      .csrf().csrfTokenRepository(csrfTokenRepository());
