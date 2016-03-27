@@ -1,5 +1,8 @@
 package de.sms.tabletennis.controller;
 
+import de.sms.tabletennis.entities.Account;
+import de.sms.tabletennis.entities.Role;
+import de.sms.tabletennis.services.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,11 +72,22 @@ public class Application extends WebMvcConfigurerAdapter {
     	@Autowired
     	private CustomUserDetailsService userDetailsService;
 
+		@Autowired
+		private AccountService accountService;
+
 		final Logger LOG = LoggerFactory.getLogger(getClass());
     	
     	@Override
     	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 			LOG.info("Login by auth");
+			Account admin = new Account();
+			admin.setUsername("admin");
+			admin.setPassword("djksv");
+			admin.setRole(Role.ADMIN);
+			if(!accountService.findByUsernameAndPassword(admin.getUsername(), admin.getPassword()).iterator().hasNext()) {
+				accountService.save(admin);
+				LOG.info("admin user created which credentials: " + admin.getUsername() + "/" + admin.getPassword());
+			}
     		auth.userDetailsService(userDetailsService);
     	}
     	

@@ -3,6 +3,8 @@ package de.sms.tabletennis.controller;
 import java.util.Collection;
 import java.util.Collections;
 
+import de.sms.tabletennis.entities.Account;
+import de.sms.tabletennis.services.AccountService;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -22,20 +24,21 @@ import de.sms.tabletennis.services.PlayerService;
 public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Autowired
-	private PlayerService playerService;
+	private AccountService accountService;
 	
 	final Logger LOG = LoggerFactory.getLogger(getClass());
 	
 	@Override
 	public UserDetails loadUserByUsername(String usernameByLogin) throws UsernameNotFoundException {
-		Player player = playerService.findByFirstName(usernameByLogin).iterator().next();
-		String persistedUsername = player.getFirstName() + player.getLastName();
-		String persistedPassword = player.getLastName();
+		LOG.info("Try to find user: " + usernameByLogin);
+		Account account = accountService.findByUsername(usernameByLogin).iterator().next();
+		String persistedUsername = account.getUsername();
+		String persistedPassword = account.getPassword();
 		if (StringUtils.isEmpty(persistedUsername)) {
 			throw new UsernameNotFoundException("Username " + persistedUsername + " not found");
 		}
-		LOG.info("Logged in player: " + player.getFirstName() + " " + player.getLastName());
-		return new User(resolveUmlauts(persistedUsername), resolveUmlauts(persistedPassword), getGrantedAuthorities(persistedUsername));
+		LOG.info("Logged in user: " + persistedUsername);
+		return new User(persistedUsername, persistedPassword, getGrantedAuthorities(persistedUsername));
 	}
 	
 	private Collection<? extends GrantedAuthority> getGrantedAuthorities(String
@@ -53,9 +56,5 @@ public class CustomUserDetailsService implements UserDetailsService {
 			}
 		};
 		return Collections.singletonList(auth);
-	}
-
-	private String resolveUmlauts(String source) {
-		return source.replace("ä", "ae").replace("ö", "oe").replace("ü", "ue");
 	}
 }

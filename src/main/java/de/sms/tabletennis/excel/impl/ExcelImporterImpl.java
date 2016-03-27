@@ -76,6 +76,7 @@ public class ExcelImporterImpl implements ExcelImporter {
 		String firstName = sheet.getCell(ROW_FIRST_NAME, rowNumber).getContents();
 		if(((StringUtils.isEmpty(lastName) && StringUtils.isEmpty(firstName))) 
 				|| (playerService.findByFirstNameAndLastName(firstName, lastName).iterator().hasNext())) {
+			accountService.save(player);
 			return null;
 		}
 		player.setLastName(lastName);
@@ -122,7 +123,6 @@ public class ExcelImporterImpl implements ExcelImporter {
 		Date birthday = ((DateCell) sheet.getCell(ROW_BIRTHDAY, rowNumber)).getDate();
 		player.setBirthday(birthday);
 		
-//		Player player = new Player(adress, firstName, lastName, privatePhone, mobilePhone, businessPhone, privateEmail, businessEmail, birthday);
 		playerService.save(player);
 		accountService.save(player);
 		

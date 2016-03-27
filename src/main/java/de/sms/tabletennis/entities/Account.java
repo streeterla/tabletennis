@@ -17,6 +17,8 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    public Account() {}
+
     public Account(Player player, String username, String password, Role role) {
         this.player = player;
         this.username = username;
