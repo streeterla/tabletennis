@@ -1,45 +1,39 @@
 package de.sms.tabletennis.excel.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-
-import de.sms.tabletennis.services.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-
-import de.sms.tabletennis.entities.Adress;
-import de.sms.tabletennis.entities.Email;
-import de.sms.tabletennis.entities.EmailType;
-import de.sms.tabletennis.entities.PhoneNumber;
-import de.sms.tabletennis.entities.PhoneType;
-import de.sms.tabletennis.entities.Player;
+import de.sms.tabletennis.entities.*;
 import de.sms.tabletennis.excel.ExcelImporter;
+import de.sms.tabletennis.services.*;
 import jxl.DateCell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.read.biff.BiffException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 
 @Component
 public class ExcelImporterImpl implements ExcelImporter {
 	
 	@Autowired
-	private final PhoneNumberService phoneNumberService;
+	private PhoneNumberService phoneNumberService;
 	
 	@Autowired
-	private final EmailService emailService;
+	private EmailService emailService;
 	
 	@Autowired
-	private final AdressService adressService;
+	private AdressService adressService;
 	
 	@Autowired
-	private final PlayerService playerService;
+	private PlayerService playerService;
 
 	@Autowired
-	private final AccountService accountService;
+	private AccountService accountService;
 
 	@Value("${COLUMN.LAST.NAME}")
 	private int COLUMN_LAST_NAME;
@@ -63,17 +57,8 @@ public class ExcelImporterImpl implements ExcelImporter {
 	private int COLUMN_CITY;
 	@Value("${COLUMN.BIRTHDAY}")
 	private int COLUMN_BIRTHDAY;
-
-	@Autowired
-	public ExcelImporterImpl(PhoneNumberService phoneNumberService, EmailService emailService, AdressService adressService,
-			PlayerService playerService, AccountService accountService) {
-		super();
-		this.phoneNumberService = phoneNumberService;
-		this.emailService = emailService;
-		this.adressService = adressService;
-		this.playerService = playerService;
-		this.accountService = accountService;
-	}
+	@Value("${sync.file}")
+	private String SYNC_FILE;
 
 	@Override
 	public void fullImport()  {

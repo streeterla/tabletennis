@@ -19,15 +19,12 @@ public class AdressServiceImpl implements AdressService {
 	private final Logger LOG = Logger.getLogger(AdressServiceImpl.class);
 
 	@Override
-	public void save(Object entity) {
-		if(entity instanceof Adress) {
-			Adress adress = (Adress) entity;
-			if((!StringUtils.isNullOrEmpty(adress.getCity()) && adress.getPostalCode() != 0 && !StringUtils.isNullOrEmpty(adress.getStreet()))
-					&& (!adressDAO.findByStreetAndPostalCodeAndCity(adress.getStreet(), adress.getPostalCode(), adress.getCity()).iterator().hasNext())){
-				adressDAO.save(adress);
-			} else {
-				LOG.info(adress + " not saved");
-			}
+	public void save(Adress adress) {
+		if((!StringUtils.isNullOrEmpty(adress.getCity()) && adress.getPostalCode() != 0 && !StringUtils.isNullOrEmpty(adress.getStreet()))
+				&& (!adressDAO.findByStreetAndPostalCodeAndCity(adress.getStreet(), adress.getPostalCode(), adress.getCity()).iterator().hasNext())){
+			adressDAO.save(adress);
+		} else {
+			LOG.info(adress + " not saved");
 		}
 	}
 	

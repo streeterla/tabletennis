@@ -1,8 +1,8 @@
 package de.sms.tabletennis.services;
 
-public interface EntityService<T extends Object> {
+public interface EntityService<T> {
 
-	public void save(Object entity);
+	void save(T entity);
 	
-	public Iterable<T> findAll();
+	Iterable<T> findAll();
 }

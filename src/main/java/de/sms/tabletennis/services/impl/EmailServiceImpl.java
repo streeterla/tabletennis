@@ -22,12 +22,9 @@ public class EmailServiceImpl implements EmailService {
 	private EmailDAO emailDAO;
 	
 	@Override
-	public void save(Object entity) {
-		if(entity instanceof Email) {
-			Email email = (Email) entity;
-			if(!emailDAO.findByEmailAndEmailType(email.getEmail(), email.getEmailType()).iterator().hasNext()) {
-				emailDAO.save(email);
-			}
+	public void save(Email email) {
+		if(!emailDAO.findByEmailAndEmailType(email.getEmail(), email.getEmailType()).iterator().hasNext()) {
+			emailDAO.save(email);
 		}
 	}
 

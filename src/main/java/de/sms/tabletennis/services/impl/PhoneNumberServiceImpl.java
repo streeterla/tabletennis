@@ -14,12 +14,9 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
 	private PhoneNumberDAO phoneNumberDAO;
 	
 	@Override
-	public void save(Object entity) {
-		if(entity instanceof PhoneNumber) {
-			PhoneNumber phoneNumber = (PhoneNumber) entity;
-			if(!phoneNumberDAO.findByNumberAndPhoneType(phoneNumber.getNumber(), phoneNumber.getPhoneType()).iterator().hasNext()) {
-				phoneNumberDAO.save(phoneNumber);
-			}
+	public void save(PhoneNumber phoneNumber) {
+		if(!phoneNumberDAO.findByNumberAndPhoneType(phoneNumber.getNumber(), phoneNumber.getPhoneType()).iterator().hasNext()) {
+			phoneNumberDAO.save(phoneNumber);
 		}
 	}
 

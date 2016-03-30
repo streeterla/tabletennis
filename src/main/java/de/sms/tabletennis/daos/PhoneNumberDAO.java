@@ -9,7 +9,7 @@ import de.sms.tabletennis.entities.PhoneType;
 
 public interface PhoneNumberDAO extends CrudRepository<PhoneNumber, Long> {
 	
-	public List<PhoneNumber> findAll();
+	List<PhoneNumber> findAll();
 	
-	public Iterable<PhoneNumber> findByNumberAndPhoneType(String number, PhoneType phoneType);
+	Iterable<PhoneNumber> findByNumberAndPhoneType(String number, PhoneType phoneType);
 }

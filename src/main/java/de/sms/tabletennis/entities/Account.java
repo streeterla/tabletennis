@@ -2,9 +2,6 @@ package de.sms.tabletennis.entities;
 
 import javax.persistence.*;
 
-/**
- * Created by streeter on 24.03.16.
- */
 @Entity
 public class Account {
     @Id

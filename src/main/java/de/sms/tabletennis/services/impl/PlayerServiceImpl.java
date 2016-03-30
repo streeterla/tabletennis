@@ -17,12 +17,9 @@ public class PlayerServiceImpl implements PlayerService {
 	private PlayerDAO playerDAO;
 	
 	@Override
-	public void save(Object entity) {
-		if(entity instanceof Player) {
-			Player player = (Player) entity;
-			if(!playerDAO.findByFirstNameAndLastName(player.getFirstName(), player.getLastName()).iterator().hasNext()) {
-				playerDAO.save(player);
-			}
+	public void save(Player player) {
+		if(!playerDAO.findByFirstNameAndLastName(player.getFirstName(), player.getLastName()).iterator().hasNext()) {
+			playerDAO.save(player);
 		}
 	}
 	

@@ -17,9 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import de.sms.tabletennis.entities.Player;
-import de.sms.tabletennis.services.PlayerService;
-
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 	
@@ -38,11 +35,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("Username " + persistedUsername + " not found");
 		}
 		LOG.info("Logged in user: " + persistedUsername);
-		return new User(persistedUsername, persistedPassword, getGrantedAuthorities(persistedUsername));
+		return new User(persistedUsername, persistedPassword, getGrantedAuthorities());
 	}
 	
-	private Collection<? extends GrantedAuthority> getGrantedAuthorities(String
-	username) {
+	private Collection<? extends GrantedAuthority> getGrantedAuthorities() {
 		GrantedAuthority auth = new GrantedAuthority() {
 			
 			/**

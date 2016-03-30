@@ -4,5 +4,5 @@ import java.io.File;
 
 public interface UploadService {
 
-	public boolean uploadFile(File syncFile);
+	boolean uploadFile(File syncFile);
 }

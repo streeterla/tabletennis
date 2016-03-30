@@ -1,11 +1,10 @@
 package de.sms.tabletennis.services;
 
 import de.sms.tabletennis.entities.Account;
+import de.sms.tabletennis.entities.Player;
 
-/**
- * Created by streeter on 24.03.16.
- */
 public interface AccountService extends EntityService<Account> {
+    void save(Player player);
     Iterable<Account> findByUsername(String username);
     Iterable<Account> findByUsernameAndPassword(String username, String password);
 }

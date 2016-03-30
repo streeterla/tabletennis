@@ -7,7 +7,7 @@ import de.sms.tabletennis.entities.EmailType;
 
 public interface EmailDAO extends CrudRepository<Email, Long> {
 
-	public Iterable<Email> findAll();
+	Iterable<Email> findAll();
 	
-	public Iterable<Email> findByEmailAndEmailType(String email, EmailType emailType);
+	Iterable<Email> findByEmailAndEmailType(String email, EmailType emailType);
 }
