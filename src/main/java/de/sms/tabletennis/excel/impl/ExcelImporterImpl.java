@@ -6,6 +6,7 @@ import java.util.Date;
 
 import de.sms.tabletennis.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -39,7 +40,30 @@ public class ExcelImporterImpl implements ExcelImporter {
 
 	@Autowired
 	private final AccountService accountService;
-	
+
+	@Value("${COLUMN.LAST.NAME}")
+	private int COLUMN_LAST_NAME;
+	@Value("${COLUMN.FIRST.NAME}")
+	private int COLUMN_FIRST_NAME;
+	@Value("${COLUMN.PRIVATE.PHONE}")
+	private int COLUMN_PRIVATE_PHONE;
+	@Value("${COLUMN.MOBILE.PHONE}")
+	private int COLUMN_MOBILE_PHONE;
+	@Value("${COLUMN.BUSINESS.PHONE}")
+	private int COLUMN_BUSINESS_PHONE;
+	@Value("${COLUMN.PRIVATE.EMAIL}")
+	private int COLUMN_PRIVATE_EMAIL;
+	@Value("${COLUMN.BUSINESS.EMAIL}")
+	private int COLUMN_BUSINESS_EMAIL;
+	@Value("${COLUMN.STREET}")
+	private int COLUMN_STREET;
+	@Value("${COLUMN.POSTAL.CODE}")
+	private int COLUMN_POSTAL_CODE;
+	@Value("${COLUMN.CITY}")
+	private int COLUMN_CITY;
+	@Value("${COLUMN.BIRTHDAY}")
+	private int COLUMN_BIRTHDAY;
+
 	@Autowired
 	public ExcelImporterImpl(PhoneNumberService phoneNumberService, EmailService emailService, AdressService adressService,
 			PlayerService playerService, AccountService accountService) {
@@ -72,8 +96,8 @@ public class ExcelImporterImpl implements ExcelImporter {
 	@Override
 	public Player importPlayer(Sheet sheet, int rowNumber) {
 		Player player = new Player();
-		String lastName = sheet.getCell(ROW_LAST_NAME, rowNumber).getContents();
-		String firstName = sheet.getCell(ROW_FIRST_NAME, rowNumber).getContents();
+		String lastName = sheet.getCell(COLUMN_LAST_NAME, rowNumber).getContents();
+		String firstName = sheet.getCell(COLUMN_FIRST_NAME, rowNumber).getContents();
 		if(((StringUtils.isEmpty(lastName) && StringUtils.isEmpty(firstName))) 
 				|| (playerService.findByFirstNameAndLastName(firstName, lastName).iterator().hasNext())) {
 			accountService.save(player);
@@ -81,46 +105,46 @@ public class ExcelImporterImpl implements ExcelImporter {
 		}
 		player.setLastName(lastName);
 		player.setFirstName(firstName);
-		String privatePhoneNumber = sheet.getCell(ROW_PRIVATE_PHONE, rowNumber).getContents();
+		String privatePhoneNumber = sheet.getCell(COLUMN_PRIVATE_PHONE, rowNumber).getContents();
 		PhoneNumber privatePhone = new PhoneNumber(PhoneType.PRIVATE, privatePhoneNumber);
 		if(phoneNumberService.validate(privatePhone)) {
 			phoneNumberService.save(privatePhone);
 			player.setPrivatePhone(privatePhone);
 		}
-		String mobilePhoneNumber = sheet.getCell(ROW_MOBILE_PHONE, rowNumber).getContents();
+		String mobilePhoneNumber = sheet.getCell(COLUMN_MOBILE_PHONE, rowNumber).getContents();
 		PhoneNumber mobilePhone = new PhoneNumber(PhoneType.MOBILE, mobilePhoneNumber);
 		if(phoneNumberService.validate(mobilePhone)) {
 			phoneNumberService.save(mobilePhone);
 			player.setMobilePhone(mobilePhone);
 		}
-		String businessPhoneNumber= sheet.getCell(ROW_BUSINESS_PHONE, rowNumber).getContents();
+		String businessPhoneNumber= sheet.getCell(COLUMN_BUSINESS_PHONE, rowNumber).getContents();
 		PhoneNumber businessPhone = new PhoneNumber(PhoneType.BUSINESS, businessPhoneNumber);
 		if(phoneNumberService.validate(businessPhone)) {
 			phoneNumberService.save(businessPhone);
 			player.setBusinessPhone(businessPhone);
 		}
-		String privateEmailAdress = sheet.getCell(ROW_PRIVATE_EMAIL, rowNumber).getContents();
+		String privateEmailAdress = sheet.getCell(COLUMN_PRIVATE_EMAIL, rowNumber).getContents();
 		Email privateEmail = new Email(EmailType.PRIVATE, privateEmailAdress);
 		if(emailService.validate(privateEmail)) {
 			emailService.save(privateEmail);
 			player.setPrivateEmail(privateEmail);
 		}
-		String businessEmailAdress = sheet.getCell(ROW_BUSINESS_EMAIL, rowNumber).getContents();
+		String businessEmailAdress = sheet.getCell(COLUMN_BUSINESS_EMAIL, rowNumber).getContents();
 		Email businessEmail = new Email(EmailType.BUSINESS, businessEmailAdress);
 		if(emailService.validate(businessEmail)) {
 			emailService.save(businessEmail);
 			player.setBusinessEmail(businessEmail);
 		}
 		
-		String street = sheet.getCell(ROW_STREET, rowNumber).getContents();
-		String city = sheet.getCell(ROW_CITY, rowNumber).getContents();
-		String postalCodeString = sheet.getCell(ROW_POSTAL_CODE, rowNumber).getContents();
+		String street = sheet.getCell(COLUMN_STREET, rowNumber).getContents();
+		String city = sheet.getCell(COLUMN_CITY, rowNumber).getContents();
+		String postalCodeString = sheet.getCell(COLUMN_POSTAL_CODE, rowNumber).getContents();
 		int postalCode = Integer.parseInt(postalCodeString);
 		Adress adress = new Adress(street, postalCode, city);
 		adressService.save(adress);
 		player.setAdress(adress);
 		
-		Date birthday = ((DateCell) sheet.getCell(ROW_BIRTHDAY, rowNumber)).getDate();
+		Date birthday = ((DateCell) sheet.getCell(COLUMN_BIRTHDAY, rowNumber)).getDate();
 		player.setBirthday(birthday);
 		
 		playerService.save(player);

@@ -6,6 +6,7 @@ import de.sms.tabletennis.services.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -75,32 +76,31 @@ public class Application extends WebMvcConfigurerAdapter {
 		@Autowired
 		private AccountService accountService;
 
-		final Logger LOG = LoggerFactory.getLogger(getClass());
+		private final Logger LOG = LoggerFactory.getLogger(getClass());
+
+		@Value("${administrator.username}")
+		private String adminUsername;
+
+		@Value("${administrator.password}")
+		private String adminPassword;
     	
     	@Override
     	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 			LOG.info("Login by auth");
 			Account admin = new Account();
-			admin.setUsername("admin");
-			admin.setPassword("djksv");
+
+			admin.setUsername(adminUsername);
+			admin.setPassword(adminPassword);
 			admin.setRole(Role.ADMIN);
 			if(!accountService.findByUsernameAndPassword(admin.getUsername(), admin.getPassword()).iterator().hasNext()) {
 				accountService.save(admin);
 				LOG.info("admin user created which credentials: " + admin.getUsername() + "/" + admin.getPassword());
 			}
+			else {
+				LOG.info("admin user already created with credentials: " + admin.getUsername() + "/" + admin.getPassword());
+			}
     		auth.userDetailsService(userDetailsService);
     	}
-    	
-//    	@Autowired
-//    	private DataSource restDataSource;
-//
-//    	@Autowired
-//    	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//    	    auth
-//    	        .jdbcAuthentication()
-//    	        .dataSource(restDataSource)
-//    	        .usersByUsernameQuery("select first_name from player;").;
-//    	}
     	
 		@Override
 		  protected void configure(HttpSecurity http) throws Exception {

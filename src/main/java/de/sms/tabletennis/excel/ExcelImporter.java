@@ -2,31 +2,20 @@ package de.sms.tabletennis.excel;
 
 import de.sms.tabletennis.entities.Player;
 import jxl.Sheet;
+import org.springframework.beans.factory.annotation.Value;
 
 public interface ExcelImporter {
-	
-	int ROW_LAST_NAME = 0;
-	int ROW_FIRST_NAME = 1;
-	int ROW_PRIVATE_PHONE = 2;
-	int ROW_MOBILE_PHONE = 3;
-	int ROW_BUSINESS_PHONE = 4;
-	int ROW_PRIVATE_EMAIL = 5;
-	int ROW_BUSINESS_EMAIL = 6;
-	int ROW_STREET = 7;
-	int ROW_POSTAL_CODE = 8;
-	int ROW_CITY = 9;
-	int ROW_BIRTHDAY = 10;
-	
+
 	String SYNC_FILE = "resources/Kontaktliste.xls";
-	
+
 	/**
 	 * provides a full import of the contact excel into database
 	 */
 	public void fullImport();
-	
+
 	/**
 	 * imports one player into database
-	 * 
+	 *
 	 * @param sheet in the excel
 	 * @param rowNumber of the player
 	 * @return the player to import
