@@ -1,12 +1,8 @@
 package de.sms.tabletennis.controller;
 
-import de.sms.tabletennis.entities.Account;
-import de.sms.tabletennis.entities.Role;
-import de.sms.tabletennis.services.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -51,20 +47,6 @@ public class Application extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/assets/**").addResourceLocations("/resources/"); 
     }
 
-
-//	@Bean
-//	/**
-//	 * should solve issues with special characters like German umlauts
-//	 */
-//	public ServletContextInitializer servletContextInitializer() {
-//		return (ServletContext servletContext) -> {
-//			final CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-//			characterEncodingFilter.setEncoding("UTF-8");
-//			characterEncodingFilter.setForceEncoding(false);
-//		};
-//	}
-
-
 	@Configuration
     @EnableWebSecurity
     @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
@@ -73,32 +55,11 @@ public class Application extends WebMvcConfigurerAdapter {
     	@Autowired
     	private CustomUserDetailsService userDetailsService;
 
-		@Autowired
-		private AccountService accountService;
-
 		private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-		@Value("${administrator.username}")
-		private String adminUsername;
-
-		@Value("${administrator.password}")
-		private String adminPassword;
-    	
     	@Override
     	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 			LOG.info("Login by auth");
-			Account admin = new Account();
-
-			admin.setUsername(adminUsername);
-			admin.setPassword(adminPassword);
-			admin.setRole(Role.ADMIN);
-			if(!accountService.findByUsernameAndPassword(admin.getUsername(), admin.getPassword()).iterator().hasNext()) {
-				accountService.save(admin);
-				LOG.info("admin user created which credentials: " + admin.getUsername() + "/" + admin.getPassword());
-			}
-			else {
-				LOG.info("admin user already created with credentials: " + admin.getUsername() + "/" + admin.getPassword());
-			}
     		auth.userDetailsService(userDetailsService);
     	}
     	
