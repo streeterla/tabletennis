@@ -32,7 +32,7 @@
 				<li ng-show="!authenticated"><a href="#/login">login</a></li>
 				<li ng-show="authenticated"><a href="" ng-click="nav.logout()">logout</a></li>
 				<li ng-show="authenticated"><a href="" ng-click="nav.fileupload()">Excel hochladen</a>
-				<li ng-show="authenticated"><a href="" ng-click="nav.filedownload()">Excel herunterladen</a>
+				<li ng-show="authenticated"><a href="/download">Excel herunterladen</a>
 			</ul>
 		</div>
 		<div ng-view class="container"></div>
