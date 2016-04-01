@@ -1,10 +1,10 @@
 package de.sms.tabletennis.daos;
 
+import de.sms.tabletennis.entities.Adress;
+import de.sms.tabletennis.entities.id.AdressID;
 import org.springframework.data.repository.CrudRepository;
 
-import de.sms.tabletennis.entities.Adress;
-
-public interface AdressDAO extends CrudRepository<Adress, Long> {
+public interface AdressDAO extends CrudRepository<Adress, AdressID> {
 
 	Iterable<Adress> findAll();
 	

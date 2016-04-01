@@ -1,11 +1,10 @@
 package de.sms.tabletennis.daos;
 
-import org.springframework.data.repository.CrudRepository;
-
 import de.sms.tabletennis.entities.Email;
 import de.sms.tabletennis.entities.EmailType;
+import org.springframework.data.repository.CrudRepository;
 
-public interface EmailDAO extends CrudRepository<Email, Long> {
+public interface EmailDAO extends CrudRepository<Email, String> {
 
 	Iterable<Email> findAll();
 	

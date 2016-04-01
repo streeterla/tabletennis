@@ -10,6 +10,8 @@ import de.sms.tabletennis.entities.Adress;
 import de.sms.tabletennis.services.AdressService;
 import jxl.common.Logger;
 
+import javax.persistence.EntityExistsException;
+
 @Service
 public class AdressServiceImpl implements AdressService {
 
@@ -22,7 +24,12 @@ public class AdressServiceImpl implements AdressService {
 	public void save(Adress adress) {
 		if((!StringUtils.isNullOrEmpty(adress.getCity()) && adress.getPostalCode() != 0 && !StringUtils.isNullOrEmpty(adress.getStreet()))
 				&& (!adressDAO.findByStreetAndPostalCodeAndCity(adress.getStreet(), adress.getPostalCode(), adress.getCity()).iterator().hasNext())){
-			adressDAO.save(adress);
+			try {
+				adressDAO.save(adress);
+			}
+			catch(EntityExistsException eee) {
+				LOG.info("Address " + adress + " already saved");
+			}
 		} else {
 			LOG.info(adress + " not saved");
 		}

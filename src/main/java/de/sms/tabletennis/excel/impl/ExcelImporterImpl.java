@@ -83,59 +83,72 @@ public class ExcelImporterImpl implements ExcelImporter {
 		Player player = new Player();
 		String lastName = sheet.getCell(COLUMN_LAST_NAME, rowNumber).getContents();
 		String firstName = sheet.getCell(COLUMN_FIRST_NAME, rowNumber).getContents();
-		if(((StringUtils.isEmpty(lastName) && StringUtils.isEmpty(firstName))) 
-				|| (playerService.findByFirstNameAndLastName(firstName, lastName).iterator().hasNext())) {
+
+		if(playerService.findByFirstNameAndLastName(firstName, lastName).iterator().hasNext()) {
+			player = playerService.findByFirstNameAndLastName(firstName, lastName).iterator().next();
+		}
+
+		if(((StringUtils.isEmpty(lastName) && StringUtils.isEmpty(firstName)))) {
 			accountService.save(player);
 			return null;
 		}
 		player.setLastName(lastName);
 		player.setFirstName(firstName);
+
+		readExcelValues(player, sheet, rowNumber);
+		
+		return player;
+	}
+
+
+	private void readExcelValues(Player player, Sheet sheet, int rowNumber) {
 		String privatePhoneNumber = sheet.getCell(COLUMN_PRIVATE_PHONE, rowNumber).getContents();
 		PhoneNumber privatePhone = new PhoneNumber(PhoneType.PRIVATE, privatePhoneNumber);
-		if(phoneNumberService.validate(privatePhone)) {
+		if(!StringUtils.isEmpty(privatePhoneNumber) && phoneNumberService.validate(privatePhone)) {
 			phoneNumberService.save(privatePhone);
 			player.setPrivatePhone(privatePhone);
 		}
 		String mobilePhoneNumber = sheet.getCell(COLUMN_MOBILE_PHONE, rowNumber).getContents();
 		PhoneNumber mobilePhone = new PhoneNumber(PhoneType.MOBILE, mobilePhoneNumber);
-		if(phoneNumberService.validate(mobilePhone)) {
+		if(!StringUtils.isEmpty(mobilePhoneNumber) && phoneNumberService.validate(mobilePhone)) {
 			phoneNumberService.save(mobilePhone);
 			player.setMobilePhone(mobilePhone);
 		}
 		String businessPhoneNumber= sheet.getCell(COLUMN_BUSINESS_PHONE, rowNumber).getContents();
 		PhoneNumber businessPhone = new PhoneNumber(PhoneType.BUSINESS, businessPhoneNumber);
-		if(phoneNumberService.validate(businessPhone)) {
+		if(!StringUtils.isEmpty(businessPhoneNumber) && phoneNumberService.validate(businessPhone)) {
 			phoneNumberService.save(businessPhone);
 			player.setBusinessPhone(businessPhone);
 		}
 		String privateEmailAdress = sheet.getCell(COLUMN_PRIVATE_EMAIL, rowNumber).getContents();
 		Email privateEmail = new Email(EmailType.PRIVATE, privateEmailAdress);
-		if(emailService.validate(privateEmail)) {
+		if(!StringUtils.isEmpty(privateEmailAdress) && emailService.validate(privateEmail)) {
 			emailService.save(privateEmail);
 			player.setPrivateEmail(privateEmail);
 		}
 		String businessEmailAdress = sheet.getCell(COLUMN_BUSINESS_EMAIL, rowNumber).getContents();
 		Email businessEmail = new Email(EmailType.BUSINESS, businessEmailAdress);
-		if(emailService.validate(businessEmail)) {
+		if(!StringUtils.isEmpty(businessEmailAdress) && emailService.validate(businessEmail)) {
 			emailService.save(businessEmail);
 			player.setBusinessEmail(businessEmail);
 		}
-		
+
 		String street = sheet.getCell(COLUMN_STREET, rowNumber).getContents();
 		String city = sheet.getCell(COLUMN_CITY, rowNumber).getContents();
 		String postalCodeString = sheet.getCell(COLUMN_POSTAL_CODE, rowNumber).getContents();
-		int postalCode = Integer.parseInt(postalCodeString);
-		Adress adress = new Adress(street, postalCode, city);
-		adressService.save(adress);
-		player.setAdress(adress);
-		
+		if(!StringUtils.isEmpty(street) && !StringUtils.isEmpty(city) && !StringUtils.isEmpty(postalCodeString)) {
+			int postalCode = Integer.parseInt(postalCodeString);
+			Adress adress = new Adress(street, postalCode, city);
+			adressService.save(adress);
+			player.setAdress(adress);
+		}
+
 		Date birthday = ((DateCell) sheet.getCell(COLUMN_BIRTHDAY, rowNumber)).getDate();
 		player.setBirthday(birthday);
-		
+
+		player.setPosition(rowNumber);
+
 		playerService.save(player);
 		accountService.save(player);
-		
-		return player;
 	}
-
 }

@@ -1,24 +1,21 @@
 package de.sms.tabletennis.entities;
 
+import de.sms.tabletennis.entities.id.PlayerID;
+
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 
 @Entity
+@IdClass(PlayerID.class)
 public class Player {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Adress adress;
+	@Id
 	private String firstName;
+	@Id
 	private String lastName;
 	@OneToOne(cascade = CascadeType.ALL)
 	private PhoneNumber privatePhone;
@@ -31,11 +28,13 @@ public class Player {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Email businessEmail;
 	private Date birthday;
-	
+	@Id
+	private int position;
+
 	public Player() {}
-	
+
 	public Player(Adress adress, String firstName, String lastName, PhoneNumber privatePhone, PhoneNumber mobilePhone, PhoneNumber businessPhone,
-			Email privateEmail, Email businessEmail, Date birthday) {
+			Email privateEmail, Email businessEmail, Date birthday, int position) {
 		super();
 		this.adress = adress;
 		this.firstName = firstName;
@@ -46,14 +45,7 @@ public class Player {
 		this.privateEmail = privateEmail;
 		this.businessEmail = businessEmail;
 		this.birthday = birthday;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
+		this.position = position;
 	}
 
 	public Adress getAdress() {
@@ -127,7 +119,15 @@ public class Player {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-	
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
 	@Override
 	public String toString() {
 		return firstName + " " + lastName;

@@ -1,5 +1,6 @@
 package de.sms.tabletennis.daos;
 
+import de.sms.tabletennis.entities.id.PlayerID;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -7,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import de.sms.tabletennis.entities.Player;
 
 @RepositoryRestResource(path = "player")
-public interface PlayerDAO extends CrudRepository<Player, Long> {
+public interface PlayerDAO extends CrudRepository<Player, PlayerID> {
 	
 	Iterable<Player> findAll();
 	

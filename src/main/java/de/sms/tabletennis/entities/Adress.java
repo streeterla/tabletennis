@@ -1,18 +1,18 @@
 package de.sms.tabletennis.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import de.sms.tabletennis.entities.id.AdressID;
+
+import javax.persistence.*;
 
 @Entity
+@IdClass(AdressID.class)
 public class Adress {
-	
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
+
+	@Id
 	private String street;
+	@Id
 	private int postalCode;
+	@Id
 	private String city;
 	
 	public Adress() {}
@@ -23,16 +23,7 @@ public class Adress {
 		this.postalCode = postalCode;
 		this.setCity(city);
 	}
-	
-	
-	public long getId() {
-		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
-	
+
 	public String getStreet() {
 		return street;
 	}

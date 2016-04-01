@@ -9,6 +9,8 @@ import de.sms.tabletennis.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
+
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -17,8 +19,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void save(Account account) {
-        if(!StringUtils.isNullOrEmpty(account.getUsername()) && !StringUtils.isNullOrEmpty(account.getPassword()) &&
-                !accountDAO.findByUsernameAndPassword(account.getUsername(), account.getPassword()).iterator().hasNext()) {
+        if(!StringUtils.isNullOrEmpty(account.getUsername()) && !StringUtils.isNullOrEmpty(account.getPassword())) {
+            Iterator<Account> iter = accountDAO.findByUsernameAndPassword(account.getUsername(), account.getPassword()).iterator();
+            if(iter.hasNext()) {
+                Account oldAccount = iter.next();
+                accountDAO.delete(oldAccount);
+            }
             accountDAO.save(account);
         }
     }

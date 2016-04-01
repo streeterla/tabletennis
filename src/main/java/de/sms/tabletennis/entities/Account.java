@@ -1,15 +1,18 @@
 package de.sms.tabletennis.entities;
 
+import de.sms.tabletennis.entities.id.AccountID;
+
 import javax.persistence.*;
 
 @Entity
+@IdClass(AccountID.class)
 public class Account {
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private long id;
+
     @OneToOne
     private Player player;
+    @Id
     private String username;
+    @Id
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -21,14 +24,6 @@ public class Account {
         this.username = username;
         this.password = password;
         this.role = role;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public Player getPlayer() {

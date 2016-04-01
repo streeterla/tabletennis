@@ -5,11 +5,9 @@ import javax.persistence.*;
 @Entity
 public class Email {
 	
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
 	@Enumerated(EnumType.STRING)
     private EmailType emailType;
+	@Id
     private String email;
     
     public Email() {}
@@ -18,14 +16,6 @@ public class Email {
 		super();
 		this.emailType = emailType;
 		this.email = email;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public EmailType getEmailType() {

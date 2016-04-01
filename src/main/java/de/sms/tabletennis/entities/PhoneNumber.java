@@ -5,11 +5,9 @@ import javax.persistence.*;
 @Entity
 public class PhoneNumber {
 	
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
 	@Enumerated(EnumType.STRING)
 	private PhoneType phoneType;
+	@Id
 	private String number;
 	
 	public PhoneNumber() {}
@@ -18,14 +16,6 @@ public class PhoneNumber {
 		super();
 		this.phoneType = phoneType;
 		this.number = number;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public PhoneType getPhoneType() {
