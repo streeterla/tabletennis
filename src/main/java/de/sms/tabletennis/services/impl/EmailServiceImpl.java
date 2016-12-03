@@ -6,10 +6,9 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.mysql.jdbc.StringUtils;
 
 import de.sms.tabletennis.daos.EmailDAO;
 import de.sms.tabletennis.entities.Email;
@@ -23,7 +22,7 @@ public class EmailServiceImpl implements EmailService {
 	
 	@Override
 	public void save(Email email) {
-		if(!emailDAO.findByEmailAndEmailType(email.getEmail(), email.getEmailType()).iterator().hasNext()) {
+		if(!StringUtils.isNullOrEmpty(email.getEmail()) && email.getEmailType() != null && !emailDAO.findByEmailAndEmailType(email.getEmail(), email.getEmailType()).iterator().hasNext()) {
 			emailDAO.save(email);
 		}
 	}
