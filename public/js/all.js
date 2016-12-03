@@ -16,7 +16,7 @@ app.controller("AllController", [ "$scope", "$http", function($scope, $http) {
     $scope.gridOptions = {
 		data: "all",
 		columnDefs: [
-		             {field: "id", displayName: "Rang" },
+		             {field: "position", displayName: "Rang" },
 		             {field: "firstName", displayName: "Vorname"},
 		             {field: "lastName", displayName: "Nachname"},
 		             {field: "privatePhone.number", displayName: "Festnetz", cellTemplate: phoneTemplate},
