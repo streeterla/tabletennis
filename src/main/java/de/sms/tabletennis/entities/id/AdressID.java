@@ -1,5 +1,7 @@
 package de.sms.tabletennis.entities.id;
 
+import de.sms.tabletennis.entities.Adress;
+
 import java.io.Serializable;
 
 public class AdressID implements Serializable {
@@ -13,6 +15,10 @@ public class AdressID implements Serializable {
         this.street = street;
         this.postalCode = postalCode;
         this.city = city;
+    }
+
+    public AdressID(Adress adress) {
+        this(adress.getStreet(), adress.getPostalCode(), adress.getCity());
     }
 
     public String getStreet() {

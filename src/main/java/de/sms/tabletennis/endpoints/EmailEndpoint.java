@@ -16,7 +16,7 @@ import de.sms.tabletennis.services.EmailService;
 public class EmailEndpoint {
 
 	@Autowired
-	EmailService emailService;
+    private EmailService emailService;
 	
 	@RequestMapping("/emaillist")
 	public String emailList() {

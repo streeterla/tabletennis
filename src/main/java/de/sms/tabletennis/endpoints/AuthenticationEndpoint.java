@@ -2,8 +2,7 @@ package de.sms.tabletennis.endpoints;
 
 import java.security.Principal;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthenticationEndpoint {
 	
-	Logger LOG = LoggerFactory.getLogger(getClass());
+	Logger LOG = Logger.getLogger(getClass());
 	
 	@RequestMapping("/user")
 	public Principal user(Principal user) {

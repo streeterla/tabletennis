@@ -9,8 +9,6 @@ import de.sms.tabletennis.daos.PlayerDAO;
 import de.sms.tabletennis.entities.Player;
 import de.sms.tabletennis.services.PlayerService;
 
-import java.util.Iterator;
-
 @Service
 @Transactional
 public class PlayerServiceImpl implements PlayerService {
@@ -20,11 +18,6 @@ public class PlayerServiceImpl implements PlayerService {
 	
 	@Override
 	public void save(Player player) {
-		Iterator<Player>  iter = findByFirstNameAndLastName(player.getFirstName(), player.getLastName()).iterator();
-		if(iter.hasNext()) {
-			Player oldPlayer = iter.next();
-			playerDAO.delete(oldPlayer);
-		}
 		playerDAO.save(player);
 	}
 	

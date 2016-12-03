@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Autowired
 	private AccountService accountService;
 	
-	final Logger LOG = LoggerFactory.getLogger(getClass());
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	
 	@Override
 	public UserDetails loadUserByUsername(String usernameByLogin) throws UsernameNotFoundException {

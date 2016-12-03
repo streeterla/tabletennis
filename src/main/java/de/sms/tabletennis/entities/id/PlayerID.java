@@ -38,9 +38,4 @@ public class PlayerID implements Serializable {
     public void setPosition(int position) {
         this.position = position;
     }
-
-    @Override
-    public int hashCode() {
-        return position;
-    }
 }

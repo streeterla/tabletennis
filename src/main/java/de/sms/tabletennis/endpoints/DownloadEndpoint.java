@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DownloadEndpoint {
 
     @Autowired
-    FileService fileService;
+    private FileService fileService;
 
     @RequestMapping(value = "/download", method = RequestMethod.GET)
     public void download(HttpServletResponse response) {

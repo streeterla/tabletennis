@@ -11,21 +11,21 @@ import javax.persistence.*;
 @IdClass(PlayerID.class)
 public class Player {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Adress adress;
 	@Id
 	private String firstName;
 	@Id
 	private String lastName;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private PhoneNumber privatePhone;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private PhoneNumber mobilePhone;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private PhoneNumber businessPhone;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private Email privateEmail;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private Email businessEmail;
 	private Date birthday;
 	@Id
