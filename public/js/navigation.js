@@ -2,7 +2,6 @@
  * 
  */
 
-var app = angular.module("tabletennis", ["ui.grid",'ngFileUpload','ngRoute']);
 
 
 app.config(function($routeProvider, $httpProvider) {
@@ -20,7 +19,7 @@ app.config(function($routeProvider, $httpProvider) {
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
   })
-  .controller('navigation', function($rootScope, $http, $location) {
+  .controller('navigation', function($rootScope, $http, $location, fileUploadService) {
 
 	  var self = this
 
@@ -63,5 +62,11 @@ app.config(function($routeProvider, $httpProvider) {
 		    $rootScope.authenticated = false;
 		    $location.path("/");
 		  });
-		}
+		};
+
+		self.fileupload = function() {
+            var file = document.getElementById('file').files[0];
+            var uploadUrl = "/fileUpload";
+            fileUploadService.uploadFileToUrl(file, uploadUrl);
+		};
 	});

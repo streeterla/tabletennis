@@ -11,9 +11,9 @@
 		<script src="https://angular-file-upload.appspot.com/js/ng-file-upload.js"></script>
 		<script src="https://angular-file-upload.appspot.com/js/ng-file-upload-shim.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
-    	<script src="js/navigation.js"></script>
-    	<script src="js/all.js"></script>
-    	<script src="js/fileupload.js"></script>
+		<script src="js/fileupload.js"></script>
+		<script src="js/navigation.js"></script>
+		<script src="js/all.js"></script>
     	<script src="js/email.js"></script>
     	
 		<style type="text/css">
@@ -31,8 +31,9 @@
 				<li class="active"><a href="#/">home</a></li>
 				<li ng-show="!authenticated"><a href="#/login">login</a></li>
 				<li ng-show="authenticated"><a href="" ng-click="nav.logout()">logout</a></li>
-				<li ng-show="authenticated"><a href="" ng-click="nav.fileupload()">Excel hochladen</a>
-				<li ng-show="authenticated"><a href="/download">Excel herunterladen</a>
+				<li ng-show="authenticated"><a href="/download">Excel herunterladen</a></li>
+				<li ng-show="authenticated"><a href="" ng-click="nav.fileupload()">Excel hochladen:</a></li>
+				<li ng-show="authenticated"><input type="file" id="file" name="file"/></li>
 			</ul>
 		</div>
 		<div ng-view class="container"></div>

@@ -1,8 +1,10 @@
 package de.sms.tabletennis.services;
 
-import java.io.File;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import java.io.IOException;
 
 public interface UploadService {
 
-	boolean uploadFile(File syncFile);
+	boolean uploadFile(MultipartHttpServletRequest request) throws IOException;
 }
