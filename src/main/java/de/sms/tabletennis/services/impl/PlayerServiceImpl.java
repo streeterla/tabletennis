@@ -23,7 +23,7 @@ public class PlayerServiceImpl implements PlayerService {
 	
 	@Override
 	public Iterable<Player> findAll() {
-		return playerDAO.findAll();
+		return playerDAO.findAllByOrderByPositionAsc();
 	}
 	
 	@Override

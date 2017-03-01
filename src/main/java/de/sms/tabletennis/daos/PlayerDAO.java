@@ -11,6 +11,8 @@ import de.sms.tabletennis.entities.Player;
 public interface PlayerDAO extends CrudRepository<Player, PlayerID> {
 	
 	Iterable<Player> findAll();
+
+	Iterable<Player> findAllByOrderByPositionAsc();
 	
 	Iterable<Player> findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);
 	
