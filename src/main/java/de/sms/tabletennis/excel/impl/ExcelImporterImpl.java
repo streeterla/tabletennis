@@ -8,6 +8,8 @@ import jxl.Sheet;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.read.biff.BiffException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -60,6 +62,8 @@ public class ExcelImporterImpl implements ExcelImporter {
 	@Value("${sync.file}")
 	private String SYNC_FILE;
 
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
+
 	@Override
 	public void fullImport()  {
 		File syncFile = new File(SYNC_FILE) ;
@@ -70,7 +74,13 @@ public class ExcelImporterImpl implements ExcelImporter {
 			wb = Workbook.getWorkbook(syncFile, ws);
 			Sheet sheet = wb.getSheet(0);
 			for(int row = 1; row < sheet.getRows(); row++) {
-				importPlayer(sheet, row);
+				try {
+					importPlayer(sheet, row);
+				}
+				catch(Exception ex) {
+					LOG.warn(ex.getMessage());
+					continue;
+				}
 			}
 		}
 		catch (BiffException | IOException be) {
@@ -143,8 +153,13 @@ public class ExcelImporterImpl implements ExcelImporter {
 			player.setAdress(adress);
 		}
 
-		Date birthday = ((DateCell) sheet.getCell(COLUMN_BIRTHDAY, rowNumber)).getDate();
-		player.setBirthday(birthday);
+		try {
+			Date birthday = ((DateCell) sheet.getCell(COLUMN_BIRTHDAY, rowNumber)).getDate();
+			player.setBirthday(birthday);
+		}
+		catch(ClassCastException cce) {
+			LOG.warn(cce.getMessage());
+		}
 
 		player.setPosition(rowNumber);
 

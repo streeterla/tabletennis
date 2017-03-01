@@ -28,7 +28,6 @@ public class Player {
 	@OneToOne(cascade = CascadeType.MERGE)
 	private Email businessEmail;
 	private Date birthday;
-	@Id
 	private int position;
 
 	public Player() {}
