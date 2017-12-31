@@ -15,6 +15,7 @@ app.controller("AllController", [ "$scope", "$http", function($scope, $http) {
 
     $scope.gridOptions = {
 		data: "all",
+		enableGridMenu: true,
 		columnDefs: [
 		             {field: "position", displayName: "Rang" },
 		             {field: "firstName", displayName: "Vorname"},
